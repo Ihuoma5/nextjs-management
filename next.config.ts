@@ -1,10 +1,8 @@
-import type { NextConfig } from 'next';
+// next.config.ts
 
-const nextConfig: NextConfig = {
-  /* config options here */
-  webpack: (config) => {
-    config.cache = false;
-    return config;
+const nextConfig = {
+  experimental: {
+    ppr: 'incremental', // Enable incremental Partial Prerendering
   },
 };
 

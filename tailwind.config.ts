@@ -15,7 +15,7 @@ const config: Config = {
         blue: {
           400: '#E27B36',
           500: '#FF8B3C',
-          600: '#B0754D',
+          600: '#FF8B3C',
         },
       },
     },

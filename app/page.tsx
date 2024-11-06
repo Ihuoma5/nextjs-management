@@ -3,6 +3,10 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from '@/app/ui/home.module.css';
+import { Card } from '@/app/ui/dashboard/cards';
+import RevenueChart from '@/app/ui/dashboard/revenue-chart';
+import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
+import { lusitana } from '@/app/ui/fonts';
 
 export default function Page() {
   return (
@@ -38,7 +42,7 @@ export default function Page() {
         alt="Screenshots of the dashboard project showing desktop version"
       />
        <Image
-        src="/hero-mobile.png"
+        src="/hero.png"
         width={560}
         height={620}
         className="block md:hidden"
