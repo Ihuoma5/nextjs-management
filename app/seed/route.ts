@@ -113,8 +113,16 @@ export async function GET() {
        return Response.json({ message: 'Database seeded successfully' });
   } catch (error) {
     await client.sql`ROLLBACK`;
-    return Response.json({ error }, { status: 500 });
+  
+    // Check if `error` is an instance of `Error` to access `message` safely
+    if (error instanceof Error) {
+      return Response.json({ error: error.message }, { status: 500 });
+    }
+  
+    // If the error is not of type `Error`, send a generic error message
+    return Response.json({ error: "An unknown error occurred" }, { status: 500 });
   }
+  
   
 }
 
