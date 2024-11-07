@@ -6,14 +6,14 @@ import {
   InvoicesTable,
   LatestInvoiceRaw,
   Revenue,
+  SiteField,
+  SitesTableType,
 } from './definitions';
 import { formatCurrency } from './utils';
+import { Site } from './definitions';
 
 export async function fetchRevenue() {
   try {
-    // Artificially delay a response for demo purposes.
-    // Don't do this in production :)
-
     console.log('Fetching revenue data...');
     await new Promise((resolve) => setTimeout(resolve, 3000));
 
@@ -30,7 +30,7 @@ export async function fetchRevenue() {
 
 export async function fetchLatestInvoices() {
   try {
-    const data = await sql<LatestInvoiceRaw>`
+    const data = await sql<LatestInvoiceRaw>` 
       SELECT invoices.amount, customers.name, customers.image_url, customers.email, invoices.id
       FROM invoices
       JOIN customers ON invoices.customer_id = customers.id
@@ -50,9 +50,6 @@ export async function fetchLatestInvoices() {
 
 export async function fetchCardData() {
   try {
-    // You can probably combine these into a single SQL query
-    // However, we are intentionally splitting them to demonstrate
-    // how to initialize multiple queries in parallel with JS.
     const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
     const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
     const invoiceStatusPromise = sql`SELECT
@@ -91,7 +88,7 @@ export async function fetchFilteredInvoices(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    const invoices = await sql<InvoicesTable>`
+    const invoices = await sql<InvoicesTable>` 
       SELECT
         invoices.id,
         invoices.amount,
@@ -121,16 +118,17 @@ export async function fetchFilteredInvoices(
 
 export async function fetchInvoicesPages(query: string) {
   try {
-    const count = await sql`SELECT COUNT(*)
-    FROM invoices
-    JOIN customers ON invoices.customer_id = customers.id
-    WHERE
-      customers.name ILIKE ${`%${query}%`} OR
-      customers.email ILIKE ${`%${query}%`} OR
-      invoices.amount::text ILIKE ${`%${query}%`} OR
-      invoices.date::text ILIKE ${`%${query}%`} OR
-      invoices.status ILIKE ${`%${query}%`}
-  `;
+    const count = await sql`
+      SELECT COUNT(*)
+      FROM invoices
+      JOIN customers ON invoices.customer_id = customers.id
+      WHERE
+        customers.name ILIKE ${`%${query}%`} OR
+        customers.email ILIKE ${`%${query}%`} OR
+        invoices.amount::text ILIKE ${`%${query}%`} OR
+        invoices.date::text ILIKE ${`%${query}%`} OR
+        invoices.status ILIKE ${`%${query}%`}
+    `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;
@@ -213,5 +211,76 @@ export async function fetchFilteredCustomers(query: string) {
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch customer table.');
+  }
+}
+
+export async function fetchSites() {
+  try {
+    const data = await sql<SiteField>`
+      SELECT
+        id,
+        site_name
+      FROM sites
+      ORDER BY site_name ASC
+    `;
+
+    const sites = data.rows;
+    return sites;
+  } catch (err) {
+    console.error('Database Error:', err);
+    throw new Error('Failed to fetch all sites.');
+  }
+}
+
+export async function fetchFilteredSites(query: string) {
+  try {
+    const data = await sql<Site[]>`
+      SELECT
+        sites.id,
+        sites.trueprep,
+        sites.truelab,
+        sites.site_name,
+        sites.date
+      FROM sites
+      WHERE sites.site_name = ${query}
+    `;
+    return data;
+  } catch (error) {
+    console.error("Error executing query:", error);
+    throw new Error("Failed to fetch filtered sites.");
+  }
+}
+
+export async function fetchSitesPages(query: string) {
+  try {
+    const count = await sql`
+      SELECT COUNT(*)
+      FROM sites
+      WHERE site_name = ${query}  -- filtering by site_name
+    `;
+    return count;
+  } catch (error) {
+    console.error("Error executing query:", error);
+    throw new Error("Failed to fetch site pages.");
+  }
+}
+export async function fetchSiteById(id: string) {
+  try {
+    const data = await sql<Site>`
+      SELECT
+        sites.id,
+        sites.trueprep,
+        sites.truelab,
+        sites.site_name,
+        sites.date
+      FROM sites
+      WHERE sites.id = ${id}
+    `;
+
+    const site = data.rows[0];
+    return site;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch site.');
   }
 }

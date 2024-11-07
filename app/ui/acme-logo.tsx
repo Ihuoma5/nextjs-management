@@ -14,7 +14,7 @@ export default function AcmeLogo() {
         height={12}
         alt="Logo"
       /> */}
-      <p className="text-[44px]">Molbio Team</p>
+      <p className="text-[44px]">Records</p>
     </div>
   );
 }

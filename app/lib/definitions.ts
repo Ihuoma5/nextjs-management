@@ -16,6 +16,29 @@ export type Customer = {
   image_url: string;
 };
 
+export type Site = {
+  id: string;
+  trueprep:string;
+  truelab: string;
+  site_name: string;
+  date: string;
+};
+
+export type SitesTableType = {
+  id: string;
+  truelab: string;
+  site_name: string;
+  // image_url: string;
+  // total_invoices: number;
+  // total_pending: number;
+  // total_paid: number;
+};
+
+export type SiteField = {
+  id: string;
+  site_name: string;
+};
+
 export type Invoice = {
   id: string;
   customer_id: string;

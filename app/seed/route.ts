@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import { db } from '@vercel/postgres';
-import { invoices, customers, revenue, users } from '../lib/placeholder-data';
+import { invoices, customers, revenue, users, sites } from '../lib/placeholder-data';
 
 const client = await db.connect();
 
@@ -78,6 +78,31 @@ async function seedCustomers() {
   );
 
   return insertedCustomers;
+}
+
+async function seedSites() {
+  await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+  await client.sql`
+    CREATE TABLE IF NOT sites (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      email VARCHAR(255) NOT NULL,
+      image_url VARCHAR(255) NOT NULL
+    );
+  `;
+
+  const insertedSites = await Promise.all(
+    sites.map(
+      (site) => client.sql`
+        INSERT INTO csites (id, trueprep, truelab, site_name,date)
+        VALUES (${site.id}, ${site.trueprep}, ${site.truelab}, ${site.site_name}, ${site.date})
+        ON CONFLICT (id) DO NOTHING;
+      `,
+    ),
+  );
+
+  return insertedSites;
 }
 
 async function seedRevenue() {
