@@ -6,11 +6,9 @@ import {
   InvoicesTable,
   LatestInvoiceRaw,
   Revenue,
-  SiteField,
-  SitesTableType,
 } from './definitions';
 import { formatCurrency } from './utils';
-import { Site } from './definitions';
+
 
 export async function fetchRevenue() {
   try {
@@ -214,73 +212,3 @@ export async function fetchFilteredCustomers(query: string) {
   }
 }
 
-export async function fetchSites() {
-  try {
-    const data = await sql<SiteField>`
-      SELECT
-        id,
-        site_name
-      FROM sites
-      ORDER BY site_name ASC
-    `;
-
-    const sites = data.rows;
-    return sites;
-  } catch (err) {
-    console.error('Database Error:', err);
-    throw new Error('Failed to fetch all sites.');
-  }
-}
-
-export async function fetchFilteredSites(query: string) {
-  try {
-    const data = await sql<Site[]>`
-      SELECT
-        sites.id,
-        sites.trueprep,
-        sites.truelab,
-        sites.site_name,
-        sites.date
-      FROM sites
-      WHERE sites.site_name = ${query}
-    `;
-    return data;
-  } catch (error) {
-    console.error("Error executing query:", error);
-    throw new Error("Failed to fetch filtered sites.");
-  }
-}
-
-export async function fetchSitesPages(query: string) {
-  try {
-    const count = await sql`
-      SELECT COUNT(*)
-      FROM sites
-      WHERE site_name = ${query}  -- filtering by site_name
-    `;
-    return count;
-  } catch (error) {
-    console.error("Error executing query:", error);
-    throw new Error("Failed to fetch site pages.");
-  }
-}
-export async function fetchSiteById(id: string) {
-  try {
-    const data = await sql<Site>`
-      SELECT
-        sites.id,
-        sites.trueprep,
-        sites.truelab,
-        sites.site_name,
-        sites.date
-      FROM sites
-      WHERE sites.id = ${id}
-    `;
-
-    const site = data.rows[0];
-    return site;
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch site.');
-  }
-}

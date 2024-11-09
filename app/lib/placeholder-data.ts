@@ -144,35 +144,35 @@ const revenue = [
   { month: 'Dec', revenue: 4800 },
 ];
 
-const sites = [
-  {
-    id: '13D07535-C59E-4157-A011-F8D2EF4E0CBB',
-    trueprep: 'TPV21719',
-    truelab: 'TLDU3382',
-    site_name: 'STOPTB/NGA/GENERAL HOSPITAL AWE',
-    date: '2021-11-18',
-    },
-    {
-      id: '13D07535-C59E-4157-A011-Y6D2EF4E0CBB',
-      trueprep: 'TPV21583',
-      truelab: 'TLDU4716',
-      site_name: 'STOPTB/NGA/IDH KANO',
-      date: '2021-11-18',
-      },
-      {
-        id: '13D07535-C59E-4157-A011-F8D27B4E0CBB',
-        trueprep: 'TPV21675',
-        truelab: 'TLDU4808',
-        site_name: 'STOPTB/NGA/BIODEL LABORATORY',
-        date: '2021-11-18',
-        },
-        {
-          id: '13D07535-C59E-4157-A011-F8D2EF43UCBB',
-          trueprep: 'TPV21725',
-          truelab: 'TLDU3678',
-          site_name: 'STOPTB/NGA/IVORY CLINIC & MATERNITY',
-          date: '2021-11-18',
-          }
-]
+// const sites = [
+//   {
+//     id: '13D07535-C59E-4157-A011-F8D2EF4E0CBB',
+//     trueprep: 'TPV21719',
+//     truelab: 'TLDU3382',
+//     site_name: 'STOPTB/NGA/GENERAL HOSPITAL AWE',
+//     date: '2021-11-18',
+//     },
+//     {
+//       id: '13D07535-C59E-4157-A011-Y6D2EF4E0CBB',
+//       trueprep: 'TPV21583',
+//       truelab: 'TLDU4716',
+//       site_name: 'STOPTB/NGA/IDH KANO',
+//       date: '2021-11-18',
+//       },
+//       {
+//         id: '13D07535-C59E-4157-A011-F8D27B4E0CBB',
+//         trueprep: 'TPV21675',
+//         truelab: 'TLDU4808',
+//         site_name: 'STOPTB/NGA/BIODEL LABORATORY',
+//         date: '2021-11-18',
+//         },
+//         {
+//           id: '13D07535-C59E-4157-A011-F8D2EF43UCBB',
+//           trueprep: 'TPV21725',
+//           truelab: 'TLDU3678',
+//           site_name: 'STOPTB/NGA/IVORY CLINIC & MATERNITY',
+//           date: '2021-11-18',
+//           }
+// ]
 
-export { users, customers, invoices, revenue, sites };
+export { users, customers, invoices, revenue };
