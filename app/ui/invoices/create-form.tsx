@@ -35,7 +35,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
               aria-describedby="customer-error"
             >
               <option value="" disabled>
-                Select a customer
+                Select a Location
               </option>
               {customers.map((customer) => (
                 <option key={customer.id} value={customer.id}>
@@ -79,7 +79,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
         {/* Invoice Status */}
         <fieldset>
           <legend className="mb-2 block text-sm font-medium">
-            Set the invoice status
+            Set the of machine status
           </legend>
           <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
             <div className="flex gap-4">
@@ -124,7 +124,7 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
         >
           Cancel
         </Link>
-        <Button type="submit">Create Invoice</Button>
+        <Button type="submit">Create Report</Button>
       </div>
     </form>
   );
